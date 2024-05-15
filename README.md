@@ -50,4 +50,11 @@ Run Cmake build without need to mkdir build folder.
  - https://stackoverflow.com/questions/10383021/how-do-i-run-a-bat-file-from-cmake
 
 
-Note if you have security protect program it error in imgui. As well other program which required compile with support third parties. 
+# Note: 
+  - 
+  
+
+# imgui:
+  There are two imgui github repo for c and c++.
+
+  - if you have security protect program it error in imgui. As well other program which required compile with support third parties. 

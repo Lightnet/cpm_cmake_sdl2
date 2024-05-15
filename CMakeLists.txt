@@ -27,13 +27,12 @@ CPMAddPackage("gh:libsdl-org/SDL_mixer#release-2.8.0")
 # add libraries
 #include(external/imgui.cmake)
 
-CPMAddPackage(
-  NAME IMGUI
-  #URL "https://github.com/ocornut/imgui/archive/refs/tags/v1.90.6.zip"
-  GITHUB_REPOSITORY ocornut/imgui
-  GIT_TAG v1.90.6
-  DOWNLOAD_ONLY True
-)
+# CPMAddPackage(
+#   NAME IMGUI
+#   GITHUB_REPOSITORY ocornut/imgui
+#   GIT_TAG v1.90.6
+#   DOWNLOAD_ONLY True
+# )
 #file(LOCK ${CPM_SOURCE_CACHE} DIRECTORY GUARD FILE RELEASE)
 
 MESSAGE(STATUS "IMGUI ===========================================================")
@@ -46,20 +45,52 @@ IF(IMGUI_ADDED)
   # MESSAGE(STATUS "IMGUI ===========================================================")
   #add_library(IMGUI)
   set(IMGUI_SOURCE_FILES
-  ${IMGUI_SOURCE_DIR}/imgui.cpp
-  ${IMGUI_SOURCE_DIR}/imgui_demo.cpp
-  ${IMGUI_SOURCE_DIR}/imgui_draw.cpp
-  ${IMGUI_SOURCE_DIR}/imgui_tables.cpp
-  ${IMGUI_SOURCE_DIR}/imgui_widgets.cpp
-  ${IMGUI_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
-  ${IMGUI_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
-  ${IMGUI_SOURCE_DIR}/backends/imgui_impl_sdlrenderer2.cpp
+    ${IMGUI_SOURCE_DIR}/imgui.cpp
+    ${IMGUI_SOURCE_DIR}/imgui_demo.cpp
+    ${IMGUI_SOURCE_DIR}/imgui_draw.cpp
+    ${IMGUI_SOURCE_DIR}/imgui_tables.cpp
+    ${IMGUI_SOURCE_DIR}/imgui_widgets.cpp
+    ${IMGUI_SOURCE_DIR}/backends/imgui_impl_sdl2.cpp
+    ${IMGUI_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+    ${IMGUI_SOURCE_DIR}/backends/imgui_impl_sdlrenderer2.cpp
   )
   set(IMGUI_INCLUDES
     ${IMGUI_SOURCE_DIR}
     ${IMGUI_SOURCE_DIR}/backends
   )
   include_directories(${IMGUI_INCLUDES})
+ENDIF()
+
+CPMAddPackage("gh:cimgui/cimgui#67cf8c96b77e6729e720a376757964ff2d2e78c0")
+MESSAGE(STATUS "IMGUI ===========================================================")
+MESSAGE(STATUS "cimgui_ADDED: ${cimgui_ADDED}")
+MESSAGE(STATUS "cimgui_INCLUDES: ${cimgui_INCLUDES}")
+MESSAGE(STATUS "cimgui_INCLUDES: ${cimgui_SOURCE_DIR}")
+MESSAGE(STATUS "IMGUI ===========================================================")
+#add include for 
+IF(cimgui_ADDED)
+  include_directories(
+    ${cimgui_SOURCE_DIR}/generator/output
+    ${cimgui_SOURCE_DIR}
+    ${cimgui_INCLUDES}
+  )
+  set(cimgui_SOURCE_FILES
+    ${cimgui_SOURCE_DIR}/cimgui.cpp
+    ${cimgui_SOURCE_DIR}/imgui/imgui.cpp
+    ${cimgui_SOURCE_DIR}/imgui/imgui_tables.cpp
+    ${cimgui_SOURCE_DIR}/imgui/imgui_draw.cpp
+    ${cimgui_SOURCE_DIR}/imgui/imgui_demo.cpp
+    ${cimgui_SOURCE_DIR}/imgui/imgui_widgets.cpp
+    ${cimgui_SOURCE_DIR}/imgui/backends/imgui_impl_sdl2.cpp
+    ${cimgui_SOURCE_DIR}/imgui/backends/imgui_impl_opengl3.cpp
+  )
+
+  set(cimgui_INCLUDES
+    ${IMGUI_SOURCE_DIR}/imgui/
+    ${IMGUI_SOURCE_DIR}/imgui/backends
+  )
+
+  include_directories(${cimgui_INCLUDES})
 ENDIF()
 
 
@@ -75,11 +106,9 @@ SDL2_image::SDL2_image
 SDL2_mixer::SDL2_mixer
 SDL2_ttf::SDL2_ttf
 opengl32
-#OpenGL32
-#IMGUI
 #cglm
 #assimp::assimp
-#cimgui
+cimgui
 #enet
 )
 
@@ -88,7 +117,8 @@ if (PROJECT_IS_TOP_LEVEL)
     #add_executable(${PROJECT_NAME}_test src/test.c)
     #add_executable(${PROJECT_NAME}_test src/sdl2_window.cpp)
     #add_executable(${PROJECT_NAME}_test src/sdl2_opengl_imgui.cpp ${IMGUI_SOURCE_FILES})
-    add_executable(${PROJECT_NAME}_test src/sdl2_renderer_imgui.cpp ${IMGUI_SOURCE_FILES})
+    #add_executable(${PROJECT_NAME}_test src/sdl2_renderer_imgui.cpp ${IMGUI_SOURCE_FILES})
+    add_executable(${PROJECT_NAME}_test src/sdl2_opengl_imgui.c ${cimgui_SOURCE_FILES})
     target_link_libraries(${PROJECT_NAME}_test PRIVATE ${PROJECT_NAME})
 endif ()
 
