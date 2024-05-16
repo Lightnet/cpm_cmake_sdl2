@@ -23,6 +23,7 @@ CPMAddPackage("gh:libsdl-org/SDL#release-2.30.3")
 CPMAddPackage("gh:libsdl-org/SDL_image#release-2.8.2")
 CPMAddPackage("gh:libsdl-org/SDL_ttf#release-2.22.0")
 CPMAddPackage("gh:libsdl-org/SDL_mixer#release-2.8.0")
+CPMAddPackage("gh:libsdl-org/SDL_net#release-2.2.0")
 #find_package(OpenGL REQUIRED)
 # add libraries
 #include(external/imgui.cmake)
@@ -35,9 +36,9 @@ CPMAddPackage("gh:libsdl-org/SDL_mixer#release-2.8.0")
 # )
 #file(LOCK ${CPM_SOURCE_CACHE} DIRECTORY GUARD FILE RELEASE)
 
-MESSAGE(STATUS "IMGUI ===========================================================")
-MESSAGE(STATUS "IMGUI_ADDED: ${IMGUI_ADDED}")
-MESSAGE(STATUS "IMGUI ===========================================================")
+# MESSAGE(STATUS "IMGUI ===========================================================")
+# MESSAGE(STATUS "IMGUI_ADDED: ${IMGUI_ADDED}")
+# MESSAGE(STATUS "IMGUI ===========================================================")
 
 IF(IMGUI_ADDED)
   # MESSAGE(STATUS "IMGUI ===========================================================")
@@ -62,11 +63,11 @@ IF(IMGUI_ADDED)
 ENDIF()
 
 CPMAddPackage("gh:cimgui/cimgui#67cf8c96b77e6729e720a376757964ff2d2e78c0")
-MESSAGE(STATUS "IMGUI ===========================================================")
-MESSAGE(STATUS "cimgui_ADDED: ${cimgui_ADDED}")
-MESSAGE(STATUS "cimgui_INCLUDES: ${cimgui_INCLUDES}")
-MESSAGE(STATUS "cimgui_INCLUDES: ${cimgui_SOURCE_DIR}")
-MESSAGE(STATUS "IMGUI ===========================================================")
+# MESSAGE(STATUS "IMGUI ===========================================================")
+# MESSAGE(STATUS "cimgui_ADDED: ${cimgui_ADDED}")
+# MESSAGE(STATUS "cimgui_INCLUDES: ${cimgui_INCLUDES}")
+# MESSAGE(STATUS "cimgui_INCLUDES: ${cimgui_SOURCE_DIR}")
+# MESSAGE(STATUS "IMGUI ===========================================================")
 #add include for 
 IF(cimgui_ADDED)
   include_directories(
@@ -93,7 +94,8 @@ IF(cimgui_ADDED)
   include_directories(${cimgui_INCLUDES})
 ENDIF()
 
-
+# https://stackoverflow.com/questions/54864191/link-sdl2-net-with-cmake
+# target_link_libraries(${PROJECT_NAME} SDL2_net::SDL2_net)
 add_library(${PROJECT_NAME} INTERFACE)
 target_link_libraries(${PROJECT_NAME} INTERFACE
 #Vulkan::Headers
@@ -108,6 +110,7 @@ SDL2_ttf::SDL2_ttf
 opengl32
 #cglm
 #assimp::assimp
+SDL2_net::SDL2_net
 cimgui
 #enet
 )
@@ -127,3 +130,4 @@ math(EXPR DELTA_BUILD "${AFTER} - ${BEFORE}")
 MESSAGE(STATUS "[[=== BUILD ===]]")
 MESSAGE(STATUS "SDL2 APP BUILD TIME: ${DELTA_BUILD}s")
 MESSAGE(STATUS "[[=== BUILD ===]]")
+

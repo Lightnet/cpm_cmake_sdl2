@@ -8,7 +8,8 @@
  - libsdl-org/SDL_image#release-2.8.2
  - libsdl-org/SDL_ttf#release-2.22.0
  - libsdl-org/SDL_mixer#release-2.8.0
- - imgui v1.90.6
+ - libsdl-org/SDL_net#release-2.2.0
+ - imgui #67cf8c96b77e6729e720a376757964ff2d2e78c0
 
 # Information:
  Set up for CMakeLists.txt with CPM.cmake. To able to download github repo and build binaries and libs.
@@ -22,10 +23,15 @@
 # c/c++:
   Need to test build both?
 
-# required:
+# Required:
  - VS2022
  - cmake
- - 
+ - pkg-config
+ - python
+ - nasm ???
+ - perl ???
+
+ You can use package manger program like scoop.
 
 # Build (windows):
 ```
@@ -51,7 +57,7 @@ Run Cmake build without need to mkdir build folder.
 
 
 # Note: 
-  - 
+  - If you get error check the build logs. Some toolchain is required to build it for c.
   
 
 # imgui:
